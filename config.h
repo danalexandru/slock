@@ -1,13 +1,15 @@
+#include "colorschemes.h"
+
 /* user and group to drop privileges to */
-static const char *user  = "";
-static const char *group = "";
+static const char *user  = "aldan";
+static const char *group = "aldan";
 
 static const char *colorname[NUMCOLS] = {
-    [BACKGROUND] =   "#FFFFFF",
-	[INIT]       =   "2D2D2D",     /* after initialization */
-	[INPUT]      =   "#005577",   /* during input */
-	[FAILED]     =   "#CC3333",   /* wrong password */
-	[CAPS]       =   "#E7C547",         /* CapsLock on */
+    [BACKGROUND] = CurrentColorScheme.Background,
+	[INIT]       = CurrentColorScheme.Init,    /* after initialization */
+	[INPUT]      = CurrentColorScheme.Input,    /* during input */
+	[FAILED]     = CurrentColorScheme.Failed,    /* wrong password */
+	[CAPS]       = CurrentColorScheme.CapsLook,    /* CapsLock on */
 };
 
 /* treat a cleared input like a wrong password (color) */
