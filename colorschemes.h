@@ -40,8 +40,16 @@ const ColorScheme Gruvbox = {
 	.CapsLook   =   "#fabd2f",   /* CapsLock on */
 };
 
+const ColorScheme Ayu = {
+    .Background =   "#0A0B11",
+	.Init       =   "#F3F3F6",   /* after initialization */
+	.Input      =   "#36A3D9",   /* during input */
+	.Failed     =   "#FF3333",   /* wrong password */
+	.CapsLook   =   "#E7C547",   /* CapsLock on */
+};
+
 /************************************/
 /**      CURRENT COLORSCHEME        */
 /************************************/
-const ColorScheme CurrentColorScheme = DoomOne;
+const ColorScheme CurrentColorScheme = Ayu;
 
