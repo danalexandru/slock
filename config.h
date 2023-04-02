@@ -5,7 +5,8 @@ static const char *user  = "aldan";
 static const char *group = "aldan";
 
 static const char *colorname[NUMCOLS] = {
-    [BACKGROUND] = CurrentColorScheme.Background,
+    /* [BACKGROUND] = CurrentColorScheme.Background, */
+    [BACKGROUND] = "black",
 	[INIT]       = CurrentColorScheme.Init,    /* after initialization */
 	[INPUT]      = CurrentColorScheme.Input,    /* during input */
 	[FAILED]     = CurrentColorScheme.Failed,    /* wrong password */

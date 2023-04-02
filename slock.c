@@ -24,10 +24,12 @@
 #include <X11/Xutil.h>
 #include <X11/XKBlib.h>
 #include <Imlib2.h>
+#include <X11/Xft/Xft.h>
 
 #include "arg.h"
 #include "util.h"
 
+#define BLURRY_BACKGROUND 0
 char *argv0;
 
 enum {
@@ -155,6 +157,7 @@ resizerectangles(struct lock *lock)
 	}
 }
 
+#if BLURRY_BACKGROUND == 1
 static void
 drawlogo(Display *dpy, struct lock *lock, int color)
 {
@@ -162,6 +165,18 @@ drawlogo(Display *dpy, struct lock *lock, int color)
 	XFillRectangles(dpy, lock->win, lock->gc, lock->rectangles, LENGTH(rectangles));
 	XSync(dpy, False);
 }
+#else
+static void
+drawlogo(Display *dpy, struct lock *lock, int color)
+{
+	XSetForeground(dpy, lock->gc, lock->colors[BACKGROUND]);
+	XFillRectangle(dpy, lock->drawable, lock->gc, 0, 0, lock->x, lock->y);
+	XSetForeground(dpy, lock->gc, lock->colors[color]);
+	XFillRectangles(dpy, lock->drawable, lock->gc, lock->rectangles, LENGTH(rectangles));
+	XCopyArea(dpy, lock->drawable, lock->win, lock->gc, 0, 0, lock->x, lock->y, 0, 0);
+	XSync(dpy, False);
+}
+#endif // BLURRY_BACKGROUND == 1
 
 static void
 readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
@@ -237,10 +252,12 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 			color = len ? (caps ? CAPS : INPUT) : (failure || failonclear ? FAILED : INIT);
 			if (running && oldc != color) {
 				for (screen = 0; screen < nscreens; screen++) {
+#if BLURRY_BACKGROUND == 1
                     if(locks[screen]->bgmap)
                         XSetWindowBackgroundPixmap(dpy, locks[screen]->win, locks[screen]->bgmap);
                     else
                         XSetWindowBackground(dpy, locks[screen]->win, locks[screen]->colors[0]);
+#endif // BLURRY_BACKGROUND == 1
 					//XClearWindow(dpy, locks[screen]->win);
                     drawlogo(dpy, locks[screen], color);
 				}

@@ -51,5 +51,5 @@ const ColorScheme Ayu = {
 /************************************/
 /**      CURRENT COLORSCHEME        */
 /************************************/
-const ColorScheme CurrentColorScheme = Ayu;
+const ColorScheme CurrentColorScheme = Gruvbox;
 
